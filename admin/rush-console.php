@@ -28,6 +28,7 @@ if(isset($_POST['limit'])){
  $api = get_option("rush_api");
  $call= get_option("rush_api_call");
  $latency= get_option("rush_latency");
+  $limit = get_option("rush_limit");
  //print_r(array($call,$latency));
  if($api==0){
      echo "<h3 class='warning'>Please Set Your SEMrush API Key!</h3>";
@@ -60,59 +61,59 @@ if(isset($_POST['limit'])){
       </div>
      
       <div class="form-group">
-        <label class="col-sm-3 control-label" for="api">API Update Frequency:</label>
+        <label class="col-sm-3 control-label" for="api">Latency:</label>
         <div class="col-sm-9">
            <select name="latency" >
            	<?php if($latency==6){?>
-  <option value="6" selected="selected">Real-time</option>
+  <option value="6" selected="selected">Realtime</option>
   <option value="1">One hour</option>
-   	<option value="2">Two hours</option>
-   	<option value="3">Three hours</option>
-   	<option value="4">Four hours</option>
-   	<option value="5">Five hours</option>
-   	<option value="6" selected="selected">Real-time</option>
+   	<option value="2">Two hour</option>
+   	<option value="3">Three hour</option>
+   	<option value="4">Four hour</option>
+   	<option value="5">Five hour</option>
+   	<option value="6" selected="selected">Realtime</option>
   <?php }elseif($latency==1){?>
   <option value="1" selected="selected">One hour</option>
-     	<option value="2">Two hours</option>
-   	<option value="3">Three hours</option>
-   	<option value="4">Four hours</option>
-   	<option value="5">Five hours</option>
-   	<option value="6">Real-time</option>
+     	<option value="2">Two hour</option>
+   	<option value="3">Three hour</option>
+   	<option value="4">Four hour</option>
+   	<option value="5">Five hour</option>
+   	<option value="6">RealTime</option>
   <?php }elseif($latency==2){?>
   	    	<option value="1">One hour</option>
-  <option value="2" selected="selected">Two hours</option>
-   	<option value="3">Three hours</option>
-   	<option value="4">Four hours</option>
-   	<option value="5">Five hours</option>
-   	<option value="6">Real-time</option>
+  <option value="2" selected="selected">Two hour</option>
+   	<option value="3">Three hour</option>
+   	<option value="4">Four hour</option>
+   	<option value="5">Five hour</option>
+   	<option value="6">RealTime</option>
    <?php }elseif($latency==3){?>
 	    	<option value="2">One hour</option>
-  <option value="2" >Two hours</option>
-  <option value="3" selected="selected">Three hours</option>
-     	<option value="4">Four hours</option>
-   	<option value="5">Five hours</option>
-   	<option value="6">Real-time</option>
+  <option value="2" >Two hour</option>
+  <option value="3" selected="selected">Three hour</option>
+     	<option value="4">Four hour</option>
+   	<option value="5">Five hour</option>
+   	<option value="6">RealTime</option>
    <?php }elseif($latency==4){?>
    	    	<option value="2">One hour</option>
-  <option value="2" >Two hours</option>
-  <option value="3">Three hours</option>
-  <option value="4" selected="selected">Four hours</option>
-  	<option value="5">Five hours</option>
-   	<option value="6">Real-time</option>
+  <option value="2" >Two hour</option>
+  <option value="3">Three hour</option>
+  <option value="4" selected="selected">Four hour</option>
+  	<option value="5">Five hour</option>
+   	<option value="6">RealTime</option>
  <?php }elseif($latency==5){?>
    	<option value="2">One hour</option>
-  <option value="2" >Two hours</option>
-  <option value="3">Three hours</option>
-  <option value="4">Four hours</option>
-  <option value="5" selected="selected">Five hours</option>
-   	<option value="6">Real-time</option>	
+  <option value="2" >Two hour</option>
+  <option value="3">Three hour</option>
+  <option value="4">Four hour</option>
+  <option value="5" selected="selected">Five hour</option>
+   	<option value="6">RealTime</option>	
    <?php }else{?>
    	<option value="1">One hour</option>
-   	<option value="2">Two hours</option>
-   	<option value="3">Three hours</option>
-   	<option value="4">Four hours</option>
-   	<option value="5">Five hours</option>
-   	<option value="6">Real-time</option>
+   	<option value="2">Two hour</option>
+   	<option value="3">Three hour</option>
+   	<option value="4">Four hour</option>
+   	<option value="5">Five hour</option>
+   	<option value="6">RealTime</option>
    	<?php }?>
 </select> 
         </div>
@@ -120,25 +121,25 @@ if(isset($_POST['limit'])){
        
           
          <div class="form-group">
-        <label class="col-sm-3 control-label" for="api">Keyword Results Per Domain:</label>
+        <label class="col-sm-3 control-label" for="api">Limit:</label>
         <div class="col-sm-9">
            <select name="limit" >
-           	<?php if($limit==1){?>
+           	<?php if($limit==10){?>
            	<option value="10" selected="selected" >10</option>
            	<option value="30" >30</option>
   <option value="50" >50</option>
   <option value="100" >100</option>	
-           	<?php }elseif($limit==2){?>
+           	<?php }elseif($limit==30){?>
            	<option value="10" >10</option>
            	<option value="30" selected="selected" >30</option>
              <option value="50" >50</option>
   <option value="100" >100</option>
-           	<?php }elseif($limit==3){?>
+           	<?php }elseif($limit==50){?>
            		  <option value="10" >10</option>
   				<option value="30" >30</option>
-           	<option value="50" selected="selected"  >50</option>
+           	<option value="50" selected="selected">50</option>
            	  <option value="100" >100</option>	
-           	<?php }elseif($limit==4){?>
+           	<?php }elseif($limit==100){?>
            		 <option value="10" >10</option>
   <option value="30" >30</option>
   <option value="50" >50</option>

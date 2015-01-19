@@ -66,17 +66,20 @@ if ( !function_exists( 'add_action' ) ) {
 //1
 function rush_plugin_menu() {
    // add_options_page('Settings Chat it!', 'Chat Options', 'manage_options', 'chat-plugin-menu', 'chat_plugin_options');
-    add_menu_page('Settings SEMcomps','SEMcomps','manage_options','rush-plugin-menu','rush_plugin_options',null,3); 
-    add_submenu_page('rush-plugin-menu1','Organic Search','manage_options','rush_console_menu', 'rush_console_menu'); 
-    add_submenu_page('rush-plugin-menu', 'Preferences', 'Settings', 'manage_options','rush_console_page', 'rush_console_page');
+    //add_menu_page('Settings SEMcomps','SEMcomps','manage_options','rush-plugin-menu','rush_plugin_options',null,3); 
+     add_menu_page('SEMcomps','SEMcomps','manage_options','semcomps','sem_plugin_organic',null,3); 
+     add_submenu_page('semcomps','SEMcomps','Organic Research','manage_options','semcomps','sem_plugin_organic' );
+   // add_submenu_page('rush-plugin-menu1','Organic Search','manage_options','rush_console_menu', 'rush_console_menu'); 
+   add_submenu_page('semcomps', 'Settings', 'Settings', 'manage_options','sem_settings', 'sem_settings');
+   // add_submenu_page('rush-plugin-menu', 'Preferences', 'Settings', 'manage_options','rush_console_page', 'rush_console_page');
 }
 
 //2
 add_action('admin_menu', 'rush_plugin_menu');
-function rush_plugin_options() {
+function sem_plugin_organic() {
     include ('admin/rush-plugin-admin.php');
 }
-function rush_console_page(){
+function sem_settings(){
     include("admin/rush-console.php");
     
 }

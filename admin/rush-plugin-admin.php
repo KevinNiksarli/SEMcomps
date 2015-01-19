@@ -102,6 +102,7 @@ function textAreaAdjust(o) {
     padding: 0;">
     <?php
      if(isset($_POST['oglink'])){
+     	$arr=array();
      	//require_once( ABSPATH . 'wp-includes/formatting.php' );
                         	//print_r($_POST);die;
                         	 $latency= get_option("rush_latency");
@@ -110,36 +111,111 @@ function textAreaAdjust(o) {
                                 $ex = explode("\r\n",$ex);
                                 //print_r($ex);die;
                                   foreach ($ex as $key => $value) {
+                                  	  $fav=getfavicon($value);
+                                  	  //echo $fav;//die;
+								  $favicon= $fav;//die;
+								 $url= "http://api.semrush.com/?key=".$api."&type=domain_ranks&export_columns=Or,Ot,Oc&domain=".$value."&database=us";
+								       $content = @file_get_contents($url);
+								  //print_r($content);die;
+								
+								  $nm = explode("\r\n",$content);
+								
+								   unset($nm[0]);
+								  //print_r($nm);die;
+								  $nvalue=explode(";",$nm[1]);
+								  //print_r($nvalue);die;
+								  $arr[]=array($favicon,$value,$nvalue[0],$nvalue[1],$nvalue[2]);
 								  
 								  }
-     
+     //print_r($arr);die;
+   /*  foreach ($arr as $skey => $svalue) {
+						print_r($svalue);
+		 foreach ($svalue as $ckey => $cvalue) {
+			 print_r($cvalue);
+		 }
+						
+					}
+	 die;*/
                                 }
     ?>
-   <!--<div class="row">
+   <div class="row">
     	<div class="col-md-12">
+    		<div class="col-md-6">
     		<h3>Organic Search</h3>
     		
-    		<span>Organic Search Position for google.com database </span>
+    	
+    		
+    		</div>
+    		<div class="col-md-6">
+    			<button class="btn btn-warning btn-sm pull-right" onclick="$('#tbl').tableExport({type:'pdf',pdfFontSize:'8',escape:'false'});"><i class="fa fa-pdf"></i>PDF</button>
+    		</div>
     		<br />
-    		<table class="table table-striped">
-    		<th>favicon</th>
+    		<table class="table" id="tbl">
+    		    			<thead style="background-color: #E2EDFA;">
+    				<tr>
+    		<th style="visibility:hidden;">favicon</th>
     	<th>Domain</th>	
     	<th>Keywords</th>
          <th>Traffic</th>
          <th>Traffic Cost</th>
-    			<thead>
-    				<tr></tr>
+
+    				</tr>
     			</thead>
+    			<tbody>
+    			<?php 
+    			if(isset($_POST['oglink'])){
+    			foreach ($arr as $skey => $svalue) {
+					echo '<tr>';
+					foreach ($svalue as $ckey => $cvalue) {
+					if($ckey==1){
+						if(!empty($cvalue)){
+							echo '<td><h2>'.$cvalue.'</h2></td>'; 
+						}else{
+							echo '<td> - </td>';
+						}
+					}elseif($ckey==2){
+							if(!empty($cvalue)){
+							echo '<td><h2 style="color:#016DBE">'.format_num($cvalue).'</h2></td>'; 
+						}else{
+							echo '<td> - </td>';
+						}
+					}elseif($ckey==3){
+							if(!empty($cvalue)){
+							echo '<td><h2 style="color:#016DBE">'.format_num($cvalue).'</h2></td>'; 
+						}else{
+							echo '<td> - </td>';
+						}
+						
+					}elseif($ckey==4){
+								if(!empty($cvalue)){
+							echo '<td><h2 style="color:#016DBE">'.format_num($cvalue).'</h2></td>'; 
+						}else{
+							echo '<td> -</td>';
+						}
+						}else{
+								if(!empty($cvalue)){
+							echo '<td><img src="'.$cvalue.'" style="margin-top:18px;height:25px;width:25px;"/></td>'; 
+						}else{
+							echo '<td> - </td>';
+						}
+						}
+						
+					}
+					echo '</tr>';
+				}
+				}
+    			?>
+    			</tbody>
     		</table>
     	</div>
     	
-   </div>-->
+   </div>
     <div class="row">
     	             
                    	<div class="col-md-4 pull-left">
-                   		     <div class="input-group"> <span>Organic Search Positions</span>
+                   		     <div class="input-group"> <span>Organic Search Position</span>
 
-    <input id="filter" type="text" class="form-control" placeholder="Filter by keyword"/>
+    <input id="filter" type="text" class="form-control" placeholder="Filter by keywords"/>
 </div>
 </div>
 	<div class="col-md-4">
@@ -157,14 +233,11 @@ function textAreaAdjust(o) {
 </div>
     	<div class="col-md-4 ">
     <div class="btn-group pull-right" style="margin-top: 25px;">
-                            <button data-toggle="dropdown" class="btn btn-warning btn-sm dropdown-toggle"><i class="fa fa-share"></i> Export</button>
+                            <button id="pd" data-toggle="dropdown" class="btn btn-warning btn-sm dropdown-toggle"><i class="fa fa-share"></i> Export</button>
                             <ul role="menu" class="dropdown-menu ">
-                                <li><a onclick="$('#org').tableExport({type:'pdf',pdfFontSize:'6',escape:'false'});" href="#"> <img width="18px" src="<?php echo $to_plugin ;?>/icons/pdf.png"> PDF</a></li>
+                                <li><a  onclick="$('#org').tableExport({type:'pdf',pdfFontSize:'6',escape:'false'});" href="#"> <img width="18px" src="<?php echo $to_plugin ;?>/icons/pdf.png"> PDF</a></li>
                                 <li><a onclick="$('#org').tableExport({type:'excel',escape:'false'});" href="#"> <img width="18px" src="<?php echo $to_plugin ;?>/icons/xls.png"> XLS</a></li>
-                                <li class="divider"></li>              
-                            
                                 <li><a onclick="$('#org').tableExport({type:'csv',escape:'false'});" href="#"> <img width="18px" src="<?php echo $to_plugin ;?>/icons/csv.png"> CSV</a></li>
-                                <li><a onclick="$('#org').tableExport({type:'txt',escape:'false'});" href="#"> <img width="18px" src="<?php echo $to_plugin ;?>/icons/txt.png"> TXT</a></li>                                
                                 
                             </ul>
                         </div>
@@ -182,10 +255,10 @@ function textAreaAdjust(o) {
           <th data-sort-ignore="true">URL</th>
           <th data-type="numeric">Traffic %</th>
           <th data-type="numeric">Cost %</th>
-          <th data-type="numeric">Com</th>
+          <th data-type="numeric">Com.</th>
           <th data-type="numeric">Results</th>
           <th data-sort-ignore="true">Trend</th>
-          <th style="display: none;">Domain</th>
+          
         </tr>
       </thead>
         <tbody>
@@ -255,7 +328,7 @@ function textAreaAdjust(o) {
                                                  echo '</td>';
 													}else
                                                  	if($okey==4){
-                                                 		echo '<td>';
+                                                 		echo '<td class="url">';
                                                  echo '<i class="fa fa-external-link" style="color:#1AA4E4;margin-right:5px;"></i><a target="_blank" href="'.$ovalue.'">'.$ovalue.'</a>';
                                                  echo '</td>';
                                                  	}else
@@ -268,7 +341,7 @@ function textAreaAdjust(o) {
                                                  echo '<td>';
                                                  echo '<span class="inlinebar">'.$ovalue.'</span>';
                                                  echo '</td>';
-												 echo '<td style="display:none;" data-value="'.$count.'">'.$value.'</td>';
+												
                                                  	}else{
                                                      echo '<td>';
                                                  echo $ovalue;
@@ -297,7 +370,7 @@ function textAreaAdjust(o) {
 										 $data= json_encode($nm);
 										// print_r($data);die;
 										$q = "INSERT INTO `".$wpdb->prefix."rushlog` (`time`, `domain`, `data`) VALUES ('".$date."', '".$value."', '".$data."')";
- 											echo $wpdb->query($q);
+ 										$wpdb->query($q);
 									 	//print_r($nm);die;
 									
                                          foreach ($nm as $nkey => $nvalue) {
@@ -333,7 +406,7 @@ function textAreaAdjust(o) {
                                                  echo '<td>';
                                                  echo '<span class="inlinebar">'.$ovalue.'</span>';
                                                  echo '</td>';
-												 echo '<td style="display:none;" data-value="'.$count.'">'.$value.'</td>';
+												 
                                                  	}else{
                                                      echo '<td>';
                                                  echo $ovalue;
@@ -383,4 +456,36 @@ function textAreaAdjust(o) {
 
     return $timestring;
 }
+  function format_num($num, $precision = 2) {
+   if ($num >= 1000 && $num < 1000000) {
+    $n_format = number_format($num/1000,$precision).'K';
+    } else if ($num >= 1000000 && $num < 1000000000) {
+    $n_format = number_format($num/1000000,$precision).'M';
+   } else if ($num >= 1000000000) {
+   $n_format=number_format($num/1000000000,$precision).'B';
+   } else {
+   $n_format = $num;
+    }
+  return $n_format;
+  } 
+  function getfavicon($url){
+  	$fevicon='';
+  	  $html=@file_get_contents("http://www.".$url);
+	  if(!empty($html)){
+            $dom=new DOMDocument();
+            @$dom->loadHTML($html);
+            $links=$dom->getElementsByTagName('link');
+            
+
+            for($i=0;$i < $links->length;$i++ )
+            {
+                $link=$links->item($i);
+                if($link->getAttribute('rel')=='icon'||$link->getAttribute('rel')=="Shortcut Icon"||$link->getAttribute('rel')=="shortcut icon")
+                {
+                    $fevicon=$link->getAttribute('href');
+                }
+            }
+	  }
+            return  $fevicon;
+  }
   ?>

@@ -7,6 +7,18 @@ $(function(){
  	});
  	//$(".line").peity("bar");
  	$('.footable').footable();
+ 	$('#pd').click(function(){
+ 		$(".url").each(function(){
+ 		var link=$('.url').text();
+ 		var res=link.split("/");
+ 		console.log(res[2]);
+ 		$(this).text(res[2]);	
+ 		});
+ 		//alert($('.url').text());
+ 			
+ 		
+ 		
+ 	});
  	$('#cross1').click(function(){
  		$('#blk-domain').hide();
  	});
